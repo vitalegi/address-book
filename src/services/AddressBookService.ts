@@ -1,4 +1,5 @@
 import { Address, AddressBuilder } from "@/models/Address";
+import yaml from "js-yaml";
 
 const entries: Address[] = [];
 
@@ -30,8 +31,18 @@ export default class AddressBookService {
         .build()
     );
   };
-  getEntries = (searchQuery: string) => {
+  getEntries = (searchQuery: string): Address[] => {
     return this.applySearchTerms(entries, searchQuery);
+  };
+  exportEntries = (): string => {
+    const entries = this.getEntries("");
+    return yaml.dump(entries);
+  };
+  importEntries = (raw: string): void => {
+    const entries = yaml.load(raw) as Address[];
+    entries.forEach((entry) =>
+      this.addEntry(entry.name, entry.mails, entry.tags)
+    );
   };
   protected applySearchTerms = (
     entries: Address[],

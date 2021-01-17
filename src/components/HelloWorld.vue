@@ -1,18 +1,15 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <v-card class="mx-auto" tile>
-          <basic-search @update="updateSearchQuery" />
-          <selected-mails
-            :mails="selectedMails"
-            @remove="removeMail"
-            @selectAll="selectAll"
-          />
-          <address-book :search-query="searchQuery" @selectMail="selectMail" />
-        </v-card>
-      </v-col>
-    </v-row>
+    <v-card class="mx-auto" tile>
+      <basic-search @update="updateSearchQuery" />
+      <selected-mails
+        :mails="selectedMails"
+        @remove="removeMail"
+        @selectAll="selectAll"
+      />
+      <address-book :search-query="searchQuery" @selectMail="selectMail" />
+      <new-address />
+    </v-card>
   </v-container>
 </template>
 
@@ -22,9 +19,10 @@ import AddressBook from "./AddressBook.vue";
 import BasicSearch from "./BasicSearch.vue";
 import SelectedMails from "./SelectedMails.vue";
 import { addressBookService } from "@/services/AddressBookService";
+import NewAddress from "./NewAddress.vue";
 
 export default Vue.extend({
-  components: { AddressBook, BasicSearch, SelectedMails },
+  components: { AddressBook, BasicSearch, SelectedMails, NewAddress },
   name: "HelloWorld",
   data: () => ({
     searchQuery: "",

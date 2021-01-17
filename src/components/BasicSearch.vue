@@ -1,10 +1,6 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col cols="12">
-        <v-text-field v-model="searchQuery" label="Search" @input="update" />
-      </v-col>
-    </v-row>
+    <v-text-field v-model="searchQuery" label="Search" @input="update" />
   </v-container>
 </template>
 
