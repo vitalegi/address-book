@@ -11,9 +11,9 @@
         <v-btn @click="removeMails()" color="error" icon outlined >
           <v-icon> mdi-delete </v-icon>
         </v-btn>
-        <v-btn @click="save()" color="primary" icon outlined >
+        <!--<v-btn @click="save()" color="primary" icon outlined >
           <v-icon> mdi-download </v-icon>
-        </v-btn>
+        </v-btn>-->
       </v-col>
       <v-col cols="10" class="mails">
         <v-chip

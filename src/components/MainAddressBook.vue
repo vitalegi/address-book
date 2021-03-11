@@ -8,7 +8,6 @@
         @selectAll="selectAll"
       />
       <address-book :search-query="searchQuery" @selectMail="selectMail" />
-      <new-address />
     </v-card>
   </v-container>
 </template>
@@ -19,11 +18,10 @@ import AddressBook from "./AddressBook.vue";
 import BasicSearch from "./BasicSearch.vue";
 import SelectedMails from "./SelectedMails.vue";
 import { addressBookService } from "@/services/AddressBookService";
-import NewAddress from "./NewAddress.vue";
 
 export default Vue.extend({
-  components: { AddressBook, BasicSearch, SelectedMails, NewAddress },
-  name: "HelloWorld",
+  components: { AddressBook, BasicSearch, SelectedMails },
+  name: "MainAddressBook",
   data: () => ({
     searchQuery: "",
     selectedMails: new Array<string>(),

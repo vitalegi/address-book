@@ -1,0 +1,15 @@
+- name: Sample1
+  mails:
+    - email1@gmail.com
+    - email2@gmail.com
+  tags:
+    - Sample
+    - Hello
+- name: Foo
+  mails:
+    - foo@live.com
+    - bar@live.com
+  tags:
+    - Foo
+    - Bar
+    - Hello

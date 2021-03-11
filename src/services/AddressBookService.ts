@@ -1,28 +1,33 @@
 import { Address, AddressBuilder } from "@/models/Address";
 import yaml from "js-yaml";
+import { WebService } from "@/utils/WebService";
+import { factory } from "@/utils/ConfigLog4j";
+const logger = factory.getLogger("Services.AddressBookService");
 
 const entries: Address[] = [];
 
-const tags = ["WAS", "LoadBalancer", "Portal", "Oracle", "PM", "Devs", "Run"];
-
-for (let i = 0; i < 30; i++) {
-  const entry = new AddressBuilder()
-    .name("Ajeje Brazorf")
-    .mails([`ajeje.brazorf@gmail.com${Math.round(i / 2)}`])
-    .tags([])
-    .build();
-  for (let j = 0; j < i; j++) {
-    const r = (n: number) => Math.round(n * Math.random());
-    const str = tags[r(tags.length - 1)];
-    if (entry.tags.indexOf(str) == -1) {
-      entry.tags.push(str);
-    }
+class AddressBookService {
+  init() {
+    new WebService("/addresses.yaml")
+      .get()
+      .responseType("text")
+      .call()
+      .then(
+        (response) => {
+          logger.info("Loading file");
+          const entries = yaml.load(response.data) as Address[];
+          entries.forEach((entry) =>
+            this.addEntry(entry.name, entry.mails, entry.tags)
+          );
+        },
+        (error) => {
+          logger.error("Error loading addresses", error);
+        }
+      );
   }
-  entries.push(entry);
-}
 
-export default class AddressBookService {
   addEntry = (name: string, mails: string[], tags: string[]) => {
+    logger.info("addEntry");
     entries.push(
       new AddressBuilder()
         .name(name)
@@ -32,13 +37,16 @@ export default class AddressBookService {
     );
   };
   getEntries = (searchQuery: string): Address[] => {
+    logger.info("getEntries");
     return this.applySearchTerms(entries, searchQuery);
   };
   exportEntries = (): string => {
+    logger.info("exportEntries");
     const entries = this.getEntries("");
     return yaml.dump(entries);
   };
   importEntries = (raw: string): void => {
+    logger.info("importEntries");
     const entries = yaml.load(raw) as Address[];
     entries.forEach((entry) =>
       this.addEntry(entry.name, entry.mails, entry.tags)
@@ -72,3 +80,4 @@ export default class AddressBookService {
 }
 
 export const addressBookService = new AddressBookService();
+addressBookService.init();
