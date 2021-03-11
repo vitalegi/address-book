@@ -86,7 +86,7 @@ export default Vue.extend({
       while (mails.indexOf("  ") !== -1) {
         mails = mails.replaceAll("  ", " ");
       }
-      addressBookService.addEntry(this.name, mails.split(" "), this.tags);
+      //addressBookService.addEntry(this.name, mails.split(" "), this.tags);
     },
     remove(item: any) {
       console.log(`Remove`, item);

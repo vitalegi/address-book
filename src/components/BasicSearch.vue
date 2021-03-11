@@ -6,7 +6,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { addressBookService } from "@/services/AddressBookService";
 import About from "@/views/About.vue";
 
 export default Vue.extend({
